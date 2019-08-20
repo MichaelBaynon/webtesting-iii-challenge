@@ -1,26 +1,35 @@
-// Test away!
-
-import React from 'react'
-
-import Display from './Display'
-
-import renderer from 'react-test-renderer'
-
-describe('<Display />', () => {
-    it('matches snapshot', () => {
-
-        const tree = renderer.create(<Display />)
-        
-        const locked = "green-led"
-        const closed = "green-led"
-
-        const {getByText, queryByText} = render(<Display 
-        closedClass={closed}
-        lockedClass={locked}
-        />)
-
-        expect(tree.toJSON()).toMatchSnapshot()
-
-    })
     
-})
+import React from "react";
+import Display from "./Display";
+import { render, cleanup } from "@testing-library/react";
+import "@testing-library/jest-dom/extend-expect"
+
+afterEach(cleanup)
+
+
+describe("<Display />", () => {
+  it("renders without crashing", () => {
+   render(<Display />)
+  });
+  it(" open and unlocked", () => {
+    const {getByText, queryByText} = render(<Display closed={false} locked={false} /> )
+    // checks for correct text
+    getByText(/unlocked/i)
+    getByText(/open/i)
+    expect(queryByText(/closed/i)).toBe(null)
+
+  });
+    it('closed and unlocked', () => {
+      const {getByText} = render(<Display closed={true} locked={false} />)
+      getByText(/unlocked/i)
+      getByText(/closed/i)
+    })
+
+    it('closed and locked', () => {
+      const {getByText} = render(<Display closed={true} locked={true} />)
+      getByText(/^locked$/i)
+      getByText(/closed/i)
+    })
+   
+  
+});

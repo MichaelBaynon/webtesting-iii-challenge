@@ -1,18 +1,22 @@
-// Test away
+import React from 'react'
+import { render, cleanup} from '@testing-library/react'
+import Dashboard from './Dashboard'
 
-// import React from 'react'
+afterAll(cleanup)
 
-// import Dashboard from './Dashboard'
+describe('<Dashboard />', () => {
+    it('renders without crashing', () => {
+        render(<Dashboard />)
+    })
+    it('default state open and unlocked', () => {
+        const {getByText} = render(<Dashboard />)
 
-// import renderer from 'react-test-renderer'
+        //verify open and unlocked
+        getByText(/^open$/i)
+        getByText(/^unlocked$/i)
 
-// describe('<Dashboard />', () => {
-//     it('matches snapshot', () => {
 
-//         const tree = renderer.create(<Dashboard />)
-
-//         expect(tree.toJSON()).toMatchSnapshot()
-
-//     })
-    
-// })
+        const lockBtn = getByText(/^lock gate$/i)
+        const closeBtn = getByText(/^close gate$/i)
+    })
+})

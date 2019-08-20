@@ -1,18 +1,30 @@
-// Test away!
+import React from 'react'
+import {render,cleanup, fireEvent} from '@testing-library/react'
+import Controls from './Controls'
 
-// import React from 'react'
+afterEach(cleanup)
+describe('<Controls />', () => {
+it('renders without crashing', () => {
+  render(<Controls />)
+})
+it('open and unlocked', () => {
+  const closeSpy = jest.fn()
+  const lockSpy = jest.fn()
 
-// import Controls from './Controls'
+  const {getByText} =render(<Controls closed={false} locked={false} toggleClosed={closeSpy}  toggleLocked={lockSpy}  />)
+  const closeBtn = getByText(/close gate/i)
+  const lockBtn = getByText(/lock gate/i)
 
-// import renderer from 'react-test-renderer'
+//checking if button is disabled
+  expect(closeBtn.disabled).toBeFalsy()
+  expect(lockBtn.disabled).toBeTruthy()
 
-// describe('<Controls />', () => {
-//     it('matches snapshot', () => {
+  //checking button status
 
-//         const tree = renderer.create(<Controls />)
+  // fireEvent.click(closeBtn)
+  // expect(closeSpy).not.toBeCalled()
 
-//         expect(tree.toJSON()).toMatchSnapshot()
-
-//     })
-    
-// })
+  // fireEvent.click(lockBtn)
+  // expect(lockSpy).toBeCalled()
+})
+})
