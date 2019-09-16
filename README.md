@@ -79,4 +79,4 @@ This section is **optional** and not counted towards MVP. Start working on it af
 
 - add `Redux` and [read this example in the docs](https://testing-library.com/docs/example-react-redux) to learn how to write tests for it.
 
-:)
+:) :)
